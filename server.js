@@ -21,11 +21,9 @@ const SELECT_COLS = `
     inventario, etiqueta, description
 `;
 
-// ── Middleware ────────────────────────────────────────────────────────────────
 app.use(express.json({ limit: '15mb' }));
 app.use(express.static(path.join(__dirname)));
 
-// ── Protección admin ──────────────────────────────────────────────────────────
 function adminGuard(req, res, next) {
     if (req.headers['x-admin-token'] !== ADMIN_TOKEN) {
         return res.status(401).json({ error: 'No autorizado.' });
@@ -33,7 +31,6 @@ function adminGuard(req, res, next) {
     next();
 }
 
-// ── API pública ───────────────────────────────────────────────────────────────
 app.get('/api/productos', async (req, res) => {
     try {
         const { rows } = await pool.query(
@@ -46,7 +43,6 @@ app.get('/api/productos', async (req, res) => {
     }
 });
 
-// ── Admin: login ──────────────────────────────────────────────────────────────
 app.post('/api/admin/login', (req, res) => {
     const { usuario, password } = req.body || {};
     if (usuario === ADMIN_USER && password === ADMIN_PASS) {
@@ -56,7 +52,6 @@ app.post('/api/admin/login', (req, res) => {
     }
 });
 
-// ── Admin: listar productos ───────────────────────────────────────────────────
 app.get('/api/admin/productos', adminGuard, async (req, res) => {
     try {
         const { rows } = await pool.query(
@@ -68,7 +63,6 @@ app.get('/api/admin/productos', adminGuard, async (req, res) => {
     }
 });
 
-// ── Admin: crear producto ─────────────────────────────────────────────────────
 app.post('/api/admin/productos', adminGuard, async (req, res) => {
     try {
         const { nombre, precio, imagen, inventario, etiqueta, description } = req.body;
@@ -84,7 +78,6 @@ app.post('/api/admin/productos', adminGuard, async (req, res) => {
     }
 });
 
-// ── Admin: actualizar producto ────────────────────────────────────────────────
 app.put('/api/admin/productos/:id', adminGuard, async (req, res) => {
     try {
         const id = Number(req.params.id);
@@ -112,7 +105,6 @@ app.put('/api/admin/productos/:id', adminGuard, async (req, res) => {
     }
 });
 
-// ── Admin: eliminar producto ──────────────────────────────────────────────────
 app.delete('/api/admin/productos/:id', adminGuard, async (req, res) => {
     try {
         await pool.query('DELETE FROM productos WHERE id = $1', [Number(req.params.id)]);
@@ -122,7 +114,6 @@ app.delete('/api/admin/productos/:id', adminGuard, async (req, res) => {
     }
 });
 
-// ── Inicio ────────────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
     console.log(`Servidor en http://localhost:${PORT}`);
     console.log(`Admin:   http://localhost:${PORT}/admin.html`);

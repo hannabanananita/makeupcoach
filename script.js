@@ -1,29 +1,4 @@
-// ==========================================
-// CONFIGURACIÓN GENERAL
-// ==========================================
-
-// Reemplaza con tu API key de Gemini cuando esté disponible
-const GEMINI_API_KEY = '';
-
-// ==========================================
-// BASE DE DATOS - NEON POSTGRESQL
-// ==========================================
-//
-// La conexión a Neon ocurre en server.js (Node.js + @neondatabase/serverless).
-// El browser solo consume el endpoint REST local, evitando problemas de CORS
-// y manteniendo las credenciales fuera del frontend.
-//
-// Esquema de la tabla:
-//   CREATE TABLE IF NOT EXISTS productos (
-//       id          INTEGER      PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-//       nombre      VARCHAR(100) NOT NULL,
-//       precio      INTEGER      NOT NULL,
-//       imagen      BYTEA,
-//       inventario  INTEGER      NOT NULL DEFAULT 0,
-//       etiqueta    VARCHAR(50),
-//       description VARCHAR(500) NOT NULL
-//   );
-
+const GEMINI_API_KEY  = '';
 const DB_API_ENDPOINT = '/api/productos';
 
 async function fetchProductosDB() {
@@ -37,25 +12,20 @@ async function fetchProductosDB() {
     }
 }
 
-// ── Helpers de presentación ──────────────────────────────────────────────────
+const _BG_CYCLE    = ['bg-pink', 'bg-lavender', 'bg-mint', 'bg-yellow', 'bg-pink-dark'];
+const _BADGE_CYCLE = ['pink', 'purple', 'mint', 'yellow'];
 
-const _BG_CYCLE     = ['bg-pink', 'bg-lavender', 'bg-mint', 'bg-yellow', 'bg-pink-dark'];
-const _BADGE_CYCLE  = ['pink', 'purple', 'mint', 'yellow'];
-
-function getImgBg(id)     { return _BG_CYCLE[id % _BG_CYCLE.length]; }
-function getBadgeColor(id){ return _BADGE_CYCLE[id % _BADGE_CYCLE.length]; }
+function getImgBg(id)      { return _BG_CYCLE[id % _BG_CYCLE.length]; }
+function getBadgeColor(id) { return _BADGE_CYCLE[id % _BADGE_CYCLE.length]; }
 
 function imagenSrc(base64) {
     if (!base64) return null;
-    // Neon devuelve BYTEA como string base64 puro
     return `data:image/jpeg;base64,${base64.replace(/\s/g, '')}`;
 }
 
 function precioFormateado(precio) {
     return Number(precio).toLocaleString('es-CO');
 }
-
-// ── Renderizado ──────────────────────────────────────────────────────────────
 
 function renderProductosDB(productos) {
     const grid = document.querySelector('.products-grid');
@@ -64,11 +34,11 @@ function renderProductosDB(productos) {
     const sinStock = (inv) => Number(inv) === 0;
 
     grid.innerHTML = productos.map(p => {
-        const src         = imagenSrc(p.imagen);
-        const imgBg       = getImgBg(p.id);
-        const badgeColor  = getBadgeColor(p.id);
-        const agotado     = sinStock(p.inventario);
-        const imgTag      = src
+        const src        = imagenSrc(p.imagen);
+        const imgBg      = getImgBg(p.id);
+        const badgeColor = getBadgeColor(p.id);
+        const agotado    = sinStock(p.inventario);
+        const imgTag     = src
             ? `<img src="${src}" alt="${p.nombre}" onerror="this.style.display='none'">`
             : '';
 
@@ -96,7 +66,6 @@ function renderProductosDB(productos) {
         </div>`;
     }).join('');
 
-    // Re-registrar sonido squish en botones nuevos
     grid.querySelectorAll('.clay-btn:not([disabled])').forEach(el => {
         el.addEventListener('click', playSquishSound);
     });
@@ -106,15 +75,9 @@ async function inicializarProductos() {
     const productos = await fetchProductosDB();
     if (productos) {
         renderProductosDB(productos);
-        console.info(`[DB] ${productos.length} productos cargados desde Neon.`);
-    } else {
-        console.info('[DB] Usando productos estáticos del HTML como respaldo.');
+        console.info(`[DB] ${productos.length} productos cargados.`);
     }
 }
-
-// ==========================================
-// AUDIO - EFECTO SQUISH
-// ==========================================
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -136,10 +99,6 @@ function playSquishSound() {
     osc.start();
     osc.stop(audioCtx.currentTime + 0.12);
 }
-
-// ==========================================
-// CARRITO
-// ==========================================
 
 let carrito = [];
 
@@ -184,10 +143,6 @@ function actualizarCarritoUI() {
     totalEl.innerText = total.toFixed(2);
 }
 
-// ==========================================
-// MODAL
-// ==========================================
-
 function mostrarModal(titulo, mensaje) {
     const overlay = document.createElement('div');
     overlay.className = 'clay-modal-overlay';
@@ -204,10 +159,6 @@ function mostrarModal(titulo, mensaje) {
     `;
     document.body.appendChild(overlay);
 }
-
-// ==========================================
-// PEDIDO - WHATSAPP
-// ==========================================
 
 function enviarPedido() {
     if (carrito.length === 0) {
@@ -243,17 +194,12 @@ function enviarPedido() {
     msg += `\n💰 *TOTAL A PAGAR:* $${total.toLocaleString('es-CO')}\n\n`;
     msg += `¡Quedo a la espera de la confirmación para el pago y envío!`;
 
-    const url = `https://wa.me/573106612135?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank');
+    window.open(`https://wa.me/573106612135?text=${encodeURIComponent(msg)}`, '_blank');
 
     mostrarModal('¡Redirigiendo a WhatsApp!', 'Te estamos redirigiendo a WhatsApp para completar el envío de tu pedido.');
     carrito = [];
     actualizarCarritoUI();
 }
-
-// ==========================================
-// CÁMARA
-// ==========================================
 
 async function initCamera() {
     const video = document.getElementById('webcam');
@@ -276,21 +222,17 @@ function obtenerColorMejilla() {
     canvas.height = video.videoHeight || 480;
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    const x = Math.floor(canvas.width  * 0.45);
-    const y = Math.floor(canvas.height * 0.50);
+    const x  = Math.floor(canvas.width  * 0.45);
+    const y  = Math.floor(canvas.height * 0.50);
     const px = ctx.getImageData(x, y, 5, 5).data;
 
     let r = 0, g = 0, b = 0;
-    for (let i = 0; i < px.length; i += 4) { r += px[i]; g += px[i+1]; b += px[i+2]; }
+    for (let i = 0; i < px.length; i += 4) { r += px[i]; g += px[i + 1]; b += px[i + 2]; }
     const n = px.length / 4;
     r = Math.round(r / n); g = Math.round(g / n); b = Math.round(b / n);
 
     return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
 }
-
-// ==========================================
-// ANÁLISIS DE PIEL
-// ==========================================
 
 async function analizarTonoYPiel() {
     playSquishSound();
@@ -326,30 +268,26 @@ Responde SOLO con JSON válido, sin bloques de código:
         const pick = JSON.parse(data.candidates[0].content.parts[0].text.trim());
         _renderResultadoIA(pick);
     } catch (err) {
-        console.warn('[Gemini] Fallback a análisis aleatorio:', err.message);
+        console.warn('[Gemini] Fallback:', err.message);
         analizarAleatorio();
     }
 }
 
 function _renderResultadoIA(pick) {
     document.getElementById('muestra-color').style.backgroundColor = pick.hex;
-    document.getElementById('resultado-color').style.display = 'flex';
-    document.getElementById('skinTone').innerText      = pick.name;
-    document.getElementById('foundationRec').innerText = pick.foundation;
-    document.getElementById('lipstickRec').innerText   = pick.lipstick;
-    document.getElementById('blushRec').innerText      = pick.blush;
-    document.getElementById('eyeshadowRec').innerText  = pick.shadow;
-    document.getElementById('readout-default').style.display = 'none';
-    document.getElementById('results').style.display   = 'block';
+    document.getElementById('resultado-color').style.display        = 'flex';
+    document.getElementById('skinTone').innerText                   = pick.name;
+    document.getElementById('foundationRec').innerText              = pick.foundation;
+    document.getElementById('lipstickRec').innerText                = pick.lipstick;
+    document.getElementById('blushRec').innerText                   = pick.blush;
+    document.getElementById('eyeshadowRec').innerText               = pick.shadow;
+    document.getElementById('readout-default').style.display        = 'none';
+    document.getElementById('results').style.display                = 'block';
 
     const status     = document.getElementById('statusBadge');
     status.innerText = 'Análisis Completo';
     status.className = 'clay-badge mint';
 }
-
-// ==========================================
-// BOTÓN VOLVER ARRIBA
-// ==========================================
 
 function crearBotonSubir() {
     const btn = document.createElement('button');
@@ -360,10 +298,6 @@ function crearBotonSubir() {
     window.addEventListener('scroll', () => btn.classList.toggle('visible', window.scrollY > 300));
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
-
-// ==========================================
-// INICIALIZACIÓN
-// ==========================================
 
 document.addEventListener('DOMContentLoaded', async () => {
     document.querySelectorAll('.clay-btn, nav a').forEach(el => {
