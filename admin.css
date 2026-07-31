@@ -1,0 +1,490 @@
+/* ===========================
+   ADMIN — LOGIN OVERLAY
+=========================== */
+.admin-login-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: var(--bg-lavender);
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(255, 214, 232, 0.7) 0%, transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(210, 242, 255, 0.7) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(232, 221, 255, 0.5) 0%, transparent 60%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+.admin-login-card {
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.8) translateY(20px); opacity: 0; }
+    to   { transform: scale(1) translateY(0);      opacity: 1; }
+}
+
+.login-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 6px;
+}
+
+.login-title {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    color: var(--text-dark);
+    margin-bottom: 0;
+}
+
+.login-subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 28px;
+    margin-top: 4px;
+}
+
+.login-error {
+    color: #c62828;
+    font-size: 0.875rem;
+    font-weight: 600;
+    min-height: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* ===========================
+   ADMIN — HEADER
+=========================== */
+.logo-sub {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    margin-top: 2px;
+}
+
+.admin-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* ===========================
+   ADMIN — STATS GRID
+=========================== */
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 22px 26px;
+}
+
+.stat-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.55rem;
+    flex-shrink: 0;
+}
+
+.stat-number {
+    font-family: var(--font-display);
+    font-size: 2.1rem;
+    color: var(--text-dark);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: 5px;
+}
+
+/* ===========================
+   ADMIN — TABLE SECTION
+=========================== */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.admin-search {
+    margin-bottom: 0 !important;
+    width: 220px;
+    padding: 10px 18px !important;
+    font-size: 0.9rem !important;
+}
+
+/* ===========================
+   ADMIN — TABLE
+=========================== */
+.admin-table-wrapper {
+    overflow-x: auto;
+    border-radius: 20px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.admin-table th {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 2px solid var(--bg-lavender);
+    white-space: nowrap;
+}
+
+.admin-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--bg-lavender);
+    vertical-align: middle;
+    color: var(--text-dark);
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tbody tr:hover td {
+    background: rgba(244, 240, 255, 0.55);
+}
+
+.admin-thumbnail {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    object-fit: cover;
+    display: block;
+}
+
+.admin-thumb-placeholder {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: var(--pastel-lavender);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: var(--pastel-purple-text);
+}
+
+.product-name-cell {
+    font-family: var(--font-display);
+    font-size: 0.97rem;
+    white-space: nowrap;
+}
+
+.price-cell {
+    font-family: var(--font-display);
+    color: var(--pastel-purple-text);
+    white-space: nowrap;
+}
+
+.inv-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.inv-ok   { background: var(--pastel-mint);   color: #12633C; }
+.inv-low  { background: var(--pastel-yellow);  color: #7A5600; }
+.inv-zero { background: var(--pastel-pink);    color: #A8205C; }
+
+.desc-cell {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-muted);
+    font-size: 0.83rem;
+}
+
+.action-btns {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: var(--spring-transition);
+}
+
+.btn-icon.edit {
+    background: var(--pastel-lavender);
+    color: var(--pastel-purple-text);
+}
+
+.btn-icon.edit:hover {
+    background: var(--pastel-purple-text);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.btn-icon.danger {
+    background: #FFE4E8;
+    color: #C62828;
+}
+
+.btn-icon.danger:hover {
+    background: #C62828;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.table-msg {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+}
+
+/* ===========================
+   ADMIN — DANGER BUTTON
+=========================== */
+.clay-btn.danger {
+    background: #FFE4E8;
+    color: #C62828;
+    box-shadow:
+        6px 8px 16px rgba(198, 40, 40, 0.2),
+        -4px -4px 12px rgba(255, 255, 255, 0.9),
+        inset 3px 3px 6px rgba(255, 255, 255, 0.8),
+        inset -4px -4px 8px rgba(198, 40, 40, 0.2);
+}
+
+.clay-btn.danger:hover {
+    background: #C62828;
+    color: #fff;
+}
+
+/* ===========================
+   ADMIN — PRODUCT MODAL
+=========================== */
+.admin-modal {
+    max-width: 700px;
+    width: 100%;
+    text-align: left;
+}
+
+.modal-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.modal-close-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: var(--bg-lavender);
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    transition: var(--spring-transition);
+    flex-shrink: 0;
+}
+
+.modal-close-btn:hover {
+    background: var(--pastel-pink);
+    color: #A8205C;
+    transform: rotate(90deg);
+}
+
+.admin-form-grid {
+    display: grid;
+    grid-template-columns: 190px 1fr;
+    gap: 22px;
+    margin-bottom: 18px;
+}
+
+.form-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 14px;
+}
+
+.image-upload-zone {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 24px;
+    background: var(--pastel-lavender);
+    border: 2px dashed rgba(90, 53, 179, 0.35);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    transition: var(--spring-transition);
+}
+
+.image-upload-zone:hover {
+    border-color: var(--pastel-purple-text);
+    background: rgba(232, 221, 255, 0.85);
+}
+
+.image-upload-zone img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--pastel-purple-text);
+    pointer-events: none;
+    z-index: 1;
+    text-align: center;
+    padding: 12px;
+}
+
+.upload-placeholder i {
+    font-size: 2.2rem;
+    display: block;
+}
+
+.upload-placeholder p {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    line-height: 1.3;
+}
+
+.modal-footer-row {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    padding-top: 16px;
+    border-top: 2px solid var(--bg-lavender);
+    margin-top: 4px;
+}
+
+/* ===========================
+   ADMIN — TOAST
+=========================== */
+.admin-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 14px 24px;
+    border-radius: 20px;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    z-index: 99999;
+    pointer-events: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    animation: slideToast 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.admin-toast.success {
+    background: var(--pastel-mint-dark);
+    color: #fff;
+}
+
+.admin-toast.error {
+    background: #C62828;
+    color: #fff;
+}
+
+@keyframes slideToast {
+    from { transform: translateY(18px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 900px) {
+    .admin-stats-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 620px) {
+    .admin-stats-grid     { grid-template-columns: 1fr; }
+    .admin-form-grid      { grid-template-columns: 1fr; }
+    .form-row-2           { grid-template-columns: 1fr; gap: 0; }
+    .admin-search         { width: 100%; }
+    .admin-table th:nth-child(6),
+    .admin-table td:nth-child(6),
+    .admin-table th:nth-child(7),
+    .admin-table td:nth-child(7) { display: none; }
+}

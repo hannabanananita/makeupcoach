@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Makeup Coach</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- ============================================================
+     LOGIN OVERLAY
+============================================================ -->
+<div class="admin-login-overlay" id="login-overlay">
+    <div class="clay-card admin-login-card">
+        <div class="login-logo">
+            <div class="logo-icon">
+                <i class='bx bxs-magic-wand'></i>
+            </div>
+            <h1 class="login-title">Makeup Coach</h1>
+        </div>
+        <p class="login-subtitle">Panel de Administración</p>
+
+        <form id="login-form" autocomplete="off">
+            <input class="clay-input" type="text" id="l-usuario"
+                   placeholder="Usuario" required autocomplete="username">
+            <input class="clay-input" type="password" id="l-password"
+                   placeholder="Contraseña" required autocomplete="current-password">
+            <div class="login-error" id="login-error"></div>
+            <button class="clay-btn clay-btn-purple btn-full" type="submit">
+                <i class='bx bx-log-in'></i> Ingresar al Panel
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- ============================================================
+     ADMIN PANEL
+============================================================ -->
+<div id="admin-panel" class="main-wrapper" style="display:none">
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon"><i class='bx bxs-magic-wand'></i></div>
+            <div>
+                <h2>Makeup Coach</h2>
+                <p class="logo-sub">Panel Admin</p>
+            </div>
+        </div>
+        <nav class="admin-panel-header">
+            <a href="/" class="clay-btn clay-btn-mint">
+                <i class='bx bx-store-alt'></i> Ver Tienda
+            </a>
+            <button class="clay-btn" onclick="cerrarSesion()">
+                <i class='bx bx-log-out'></i> Cerrar Sesión
+            </button>
+        </nav>
+    </header>
+
+    <!-- Stats -->
+    <div class="admin-stats-grid">
+        <div class="clay-card stat-card">
+            <div class="stat-icon bg-lavender">
+                <i class='bx bx-package icon-purple'></i>
+            </div>
+            <div>
+                <div class="stat-number" id="stat-total">—</div>
+                <div class="stat-label">Total Productos</div>
+            </div>
+        </div>
+        <div class="clay-card stat-card">
+            <div class="stat-icon bg-mint">
+                <i class='bx bx-check-circle' style="color:#12633C"></i>
+            </div>
+            <div>
+                <div class="stat-number" id="stat-stock">—</div>
+                <div class="stat-label">En Stock</div>
+            </div>
+        </div>
+        <div class="clay-card stat-card">
+            <div class="stat-icon bg-pink">
+                <i class='bx bx-error-circle icon-pink-dark'></i>
+            </div>
+            <div>
+                <div class="stat-number" id="stat-agotado">—</div>
+                <div class="stat-label">Sin Stock</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Table -->
+    <div class="clay-card section-mb">
+        <div class="section-header">
+            <div class="section-title">
+                <i class='bx bxs-package icon-pink-dark'></i> Productos
+            </div>
+            <div class="section-actions">
+                <input class="clay-input admin-search" id="buscador"
+                       placeholder="🔍 Buscar producto...">
+                <button class="clay-btn clay-btn-purple" onclick="abrirModalCrear()">
+                    <i class='bx bx-plus'></i> Agregar Producto
+                </button>
+            </div>
+        </div>
+
+        <div class="admin-table-wrapper">
+            <table class="admin-table" id="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Inventario</th>
+                        <th>Etiqueta</th>
+                        <th>Descripción</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-body">
+                    <tr>
+                        <td colspan="8" class="table-msg">Cargando productos...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div><!-- /admin-panel -->
+
+<!-- ============================================================
+     MODAL: AGREGAR / EDITAR PRODUCTO
+============================================================ -->
+<div class="clay-modal-overlay" id="producto-modal" style="display:none">
+    <div class="clay-modal admin-modal">
+        <div class="modal-header-row">
+            <h2 class="modal-title" id="modal-titulo">Agregar Producto</h2>
+            <button class="modal-close-btn" onclick="cerrarModal()" type="button">
+                <i class='bx bx-x'></i>
+            </button>
+        </div>
+
+        <form id="producto-form" novalidate>
+            <div class="admin-form-grid">
+                <!-- Imagen -->
+                <div class="form-col">
+                    <div class="image-upload-zone" id="upload-zone"
+                         onclick="document.getElementById('file-imagen').click()">
+                        <img id="preview-imagen" alt="" style="display:none">
+                        <div class="upload-placeholder" id="upload-placeholder">
+                            <i class='bx bx-image-add'></i>
+                            <p>Clic para<br>cargar imagen</p>
+                        </div>
+                    </div>
+                    <input type="file" id="file-imagen" accept="image/*" style="display:none">
+                </div>
+
+                <!-- Campos -->
+                <div class="form-col">
+                    <input class="clay-input" type="text" id="f-nombre"
+                           placeholder="Nombre del producto" required>
+                    <div class="form-row-2">
+                        <input class="clay-input" type="number" id="f-precio"
+                               placeholder="Precio (COP)" required min="0">
+                        <input class="clay-input" type="number" id="f-inventario"
+                               placeholder="Inventario" required min="0">
+                    </div>
+                    <input class="clay-input" type="text" id="f-etiqueta"
+                           placeholder="Etiqueta (ej: Acabado Mate)">
+                    <textarea class="clay-input textarea-order" id="f-description"
+                              placeholder="Descripción del producto..." required></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer-row">
+                <button class="clay-btn" type="button" onclick="cerrarModal()">
+                    <i class='bx bx-x'></i> Cancelar
+                </button>
+                <button class="clay-btn clay-btn-purple" type="submit" id="btn-guardar">
+                    <i class='bx bx-plus'></i> Crear Producto
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ============================================================
+     MODAL: CONFIRMAR ELIMINACIÓN
+============================================================ -->
+<div class="clay-modal-overlay" id="delete-modal" style="display:none">
+    <div class="clay-modal" style="text-align:center; max-width:400px">
+        <span class="clay-badge pink" style="margin-bottom:16px">⚠ Confirmar</span>
+        <h2 class="modal-title">¿Eliminar producto?</h2>
+        <p class="modal-text" id="delete-nombre" style="margin-bottom:0">
+            Este producto se eliminará permanentemente.
+        </p>
+        <div style="display:flex; gap:12px; justify-content:center; margin-top:24px">
+            <button class="clay-btn" onclick="cerrarDeleteModal()">
+                <i class='bx bx-x'></i> Cancelar
+            </button>
+            <button class="clay-btn danger" onclick="confirmarDelete()">
+                <i class='bx bx-trash'></i> Eliminar
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

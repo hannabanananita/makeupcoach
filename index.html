@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makeup Coach | Claymorphism AI Studio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class='bx bxs-magic-wand'></i>
+                </div>
+                <div>
+                    <h2>Makeup Coach</h2>
+                </div>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="#inicio"><i class='bx bx-home-alt'></i> Inicio</a></li>
+                    <li><a href="#productos"><i class='bx bx-store-alt'></i> Productos</a></li>
+                    <li><a href="#ia"><i class='bx bx-scan'></i> Escáner IA</a></li>
+                    <li><a href="#carrito"><i class='bx bx-shopping-bag'></i> Carrito</a></li>
+                    <li><a href="#nosotros"><i class='bx bx-heart'></i> Nosotros</a></li>
+                    <li><a href="#pedido"><i class='bx bx-paper-plane'></i> Pedido</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="hero-grid" id="inicio">
+
+            <div class="hero-card">
+                <div class="hero-badge-wrap">
+                    <span class="clay-badge pink"><i class='bx bxs-sparkles'></i> BELLEZA CON IA</span>
+                </div>
+                <h1 class="hero-title">Encuentra Tu Maquillaje Ideal 💖</h1>
+                <p class="hero-subtitle">
+                    Descubre los tonos exactos y productos personalizados para resaltar tu belleza natural con visión artificial.
+                </p>
+
+                <div class="hero-cta-group">
+                    <a href="#ia" class="clay-btn clay-btn-purple">
+                        <i class='bx bx-radar'></i> Escáner de Piel
+                    </a>
+                    <a href="#productos" class="clay-btn clay-btn-mint">
+                        Ver Catálogo ✨
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-image-card">
+                <div class="hero-avatar-frame">
+                    <img src="assets/logo.png.jpeg" alt="Makeup Model">
+                </div>
+                <span class="clay-badge yellow mb-8">100% Precisión</span>
+                <h3 class="hero-image-title">Tu Tono Perfecto</h3>
+                <p class="hero-image-subtitle">Asesoría personalizada al instante.</p>
+            </div>
+
+        </section>
+
+        <section class="clay-card section-mb" id="productos">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class='bx bxs-package icon-pink-dark'></i> Catálogo
+                </div>
+                <span class="clay-badge mint">Productos Favoritos</span>
+            </div>
+
+            <div class="products-grid">
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-pink">
+                            <img src="assets/basedemaquillaje.jpg" alt="Base">
+                        </div>
+                        <span class="clay-badge pink badge-sm">Acabado Mate</span>
+                        <h3 class="product-title">Base Líquida </h3>
+                        <p class="product-desc">Cobertura sedosa de larga duración con textura ligera.</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$30.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Base Líquida ', 30.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-lavender">
+                            <img src="assets/paquetelabiales.jpg" alt="Labial">
+                        </div>
+                        <span class="clay-badge purple badge-sm">Efecto Velvet</span>
+                        <h3 class="product-title">Labiales en barra Mates</h3>
+                        <p class="product-desc">Pigmentación intensa e hidratación continua 5 unidades.</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$70.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Labiales en barra mates', 70.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-mint">
+                            <img src="assets/sombras.jpg" alt="Sombras">
+                        </div>
+                        <span class="clay-badge mint badge-sm">Sombras 12 tonos</span>
+                        <h3 class="product-title">Paleta Sombras</h3>
+                        <p class="product-desc">Altamente pigmentadas para cualquier mirada.</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$35.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Paleta Sombras 12', 35.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-yellow">
+                            <img src="assets/ruborpolvo.jpg" alt="Rubor">
+                        </div>
+                        <span class="clay-badge yellow badge-sm badge-text-black">Glow Natural</span>
+                        <h3 class="product-title">Rubor en polvo </h3>
+                        <p class="product-desc">Toque de color natural para resaltar tus mejillas.</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$20.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Rubor en polvo', 20.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-mint">
+                            <img src="assets/corrector.webp" alt="corrector">
+                        </div>
+                        <span class="clay-badge pink badge-sm badge-text-violet">Efecto hidratante</span>
+                        <h3 class="product-title">Corrector de ojeras</h3>
+                        <p class="product-desc">Alta cobertura, tono beige medio</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$25.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Corrector de ojeras', 25.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-pink-dark">
+                            <img src="assets/labial liquido.jpg" alt="labial liquido">
+                        </div>
+                        <span class="clay-badge yellow badge-sm badge-text-wine">Acabado mate indeleble</span>
+                        <h3 class="product-title">Labial liquido</h3>
+                        <p class="product-desc">tono nude rose</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$12.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Labial liquido', 12.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-lavender">
+                            <img src="assets/lipgloss.webp" alt="lipgloss">
+                        </div>
+                        <span class="clay-badge purple badge-sm badge-text-magenta">con ácido hialurónico</span>
+                        <h3 class="product-title">Lip gloss</h3>
+                        <p class="product-desc">tono traslúcido rosa</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$10.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Lip gloss', 10.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-pink">
+                            <img src="assets/sombraenbarra.jpg" alt="sombraenbarra">
+                        </div>
+                        <span class="clay-badge mint badge-sm badge-text-brown">Facil difuminado</span>
+                        <h3 class="product-title">Sombras en barra</h3>
+                        <p class="product-desc">tono bronce satinado</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$10.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Sombras en barra', 10.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-pink">
+                            <img src="assets/Sombraliquida.jpeg" alt="Sombraliquida">
+                        </div>
+                        <span class="clay-badge pink badge-sm">Acabado escarchado</span>
+                        <h3 class="product-title">Sombra Liquida </h3>
+                        <p class="product-desc">Tono champagne deslumbrante</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$12.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Sombra liquida ', 12.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-lavender">
+                            <img src="assets/polvosuelto.webp" alt="polvosuelto">
+                        </div>
+                        <span class="clay-badge purple badge-sm">Control de brillo</span>
+                        <h3 class="product-title">Polvo suelto</h3>
+                        <p class="product-desc">Textura translúcida</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$25.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Polvo suelto', 25.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-mint">
+                            <img src="assets/polvocompacto.jpg" alt="polvocompacto">
+                        </div>
+                        <span class="clay-badge mint badge-sm">Con flitro solar</span>
+                        <h3 class="product-title">Polvo compacto</h3>
+                        <p class="product-desc">Cobertura uniforme, tono arena.</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$20.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Polvo compacto', 20.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-yellow">
+                            <img src="assets/ruborliquido.webp" alt="Ruborliquido">
+                        </div>
+                        <span class="clay-badge yellow badge-sm badge-text-black">Glow Natural</span>
+                        <h3 class="product-title">Rubor liquido </h3>
+                        <p class="product-desc">Efecto hidratante, tono durazno.</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$20.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Rubor liquido', 20.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-mint">
+                            <img src="assets/ruborenbarra.jpg" alt="ruborenbarra">
+                        </div>
+                        <span class="clay-badge pink badge-sm badge-text-violet">Acabado cremoso</span>
+                        <h3 class="product-title">Rubor en barra</h3>
+                        <p class="product-desc">Cobertura construible, tono coral</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$25.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Rubor en barra', 25.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-pink-dark">
+                            <img src="assets/iluminadorenpolvo.webp" alt="iluminadorenpolvo">
+                        </div>
+                        <span class="clay-badge yellow badge-sm badge-text-wine">efecto radiante</span>
+                        <h3 class="product-title">Iluminador en polvo</h3>
+                        <p class="product-desc">destellos dorados</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$23.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Iluminador en polvo', 23.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-lavender">
+                            <img src="assets/iluminadorliquido.jpg" alt="iluminadorliquido">
+                        </div>
+                        <span class="clay-badge purple badge-sm badge-text-magenta">Acabado perlado</span>
+                        <h3 class="product-title">Iluminador liquido</h3>
+                        <p class="product-desc">acabado perlado, tono rosa dorado</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$15.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Iluminador liquido', 15.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-pink">
+                            <img src="assets/fijadordecejas.webp" alt="fijadordecejas">
+                        </div>
+                        <span class="clay-badge mint badge-sm badge-text-brown">Larga duración</span>
+                        <h3 class="product-title">Fijador de cejas</h3>
+                        <p class="product-desc">Gel transparente de larga duración</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$10.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Fijador de cejas', 10.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-pink">
+                            <img src="assets/fijadordemaquillaje.jpg" alt="fijadordemaquillaje">
+                        </div>
+                        <span class="clay-badge pink badge-sm">Bruma hidratante</span>
+                        <h3 class="product-title">Fijador de maquillaje</h3>
+                        <p class="product-desc">Acabado mate prolongado</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$35.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Fijador de maquillaje', 35.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-pink">
+                            <img src="assets/lapizdeojos.webp" alt="lapizdeojos">
+                        </div>
+                        <span class="clay-badge pink badge-sm">Waterproof</span>
+                        <h3 class="product-title">Lápiz de ojos</h3>
+                        <p class="product-desc">Formula cremosa, tono negro intenso.</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$7.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Lápiz de ojos', 7.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-lavender">
+                            <img src="assets/lapizdelabios.webp" alt="lapizdelabios">
+                        </div>
+                        <span class="clay-badge purple badge-sm">trazo suave</span>
+                        <h3 class="product-title">Lápiz de labios</h3>
+                        <p class="product-desc">Tono terracota.</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$7.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Lápiz de labios', 7.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-mint">
+                            <img src="assets/pestañina.jpeg" alt="pestañina">
+                        </div>
+                        <span class="clay-badge mint badge-sm">Waterproof</span>
+                        <h3 class="product-title">Pestañina</h3>
+                        <p class="product-desc">Efecto volumen y alargamiento, tono negro.</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$32.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Pestañina', 32.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-yellow">
+                            <img src="assets/delineadordeojos.jpg" alt="delineadordeojos">
+                        </div>
+                        <span class="clay-badge yellow badge-sm badge-text-black">Ultra fina</span>
+                        <h3 class="product-title">Delineador de ojos</h3>
+                        <p class="product-desc">Punta plumon, tono negro mate .</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$10.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Delineador de ojos', 10.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-mint">
+                            <img src="assets/lapizdecejas.jpg" alt="lapizdecejas">
+                        </div>
+                        <span class="clay-badge pink badge-sm badge-text-violet">Punta retráctil</span>
+                        <h3 class="product-title">Lápiz de cejas</h3>
+                        <p class="product-desc">Tono castaño oscuro</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$8.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Lápiz de cejas', 8.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-pink-dark">
+                            <img src="assets/contronoenpolvo.webp" alt="contronoenpolvo">
+                        </div>
+                        <span class="clay-badge yellow badge-sm badge-text-wine">Acabado mate</span>
+                        <h3 class="product-title">Contorno en polvo</h3>
+                        <p class="product-desc">tono café frío</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$12.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Controno en polvo', 12.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-lavender">
+                            <img src="assets/contronoenbarra.webp" alt="contronoenbarra">
+                        </div>
+                        <span class="clay-badge purple badge-sm badge-text-magenta">Facíl difuminado</span>
+                        <h3 class="product-title">Controno en barra</h3>
+                        <p class="product-desc">Textura cremosa, tono avellana </p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$12.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Contorno en barra', 12.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-img-box bg-pink">
+                            <img src="assets/contronoliquido.webp" alt="contronoliquido">
+                        </div>
+                        <span class="clay-badge mint badge-sm badge-text-brown">Alta pigmentación</span>
+                        <h3 class="product-title">Contorno liquido</h3>
+                        <p class="product-desc">Fórmula ligera, Tono Chocolate suave</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$13.000</span>
+                        <button class="clay-btn" onclick="agregarAlCarrito('Contorno liquido', 13.000)">
+                            <i class='bx bx-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="clay-card section-mb section-ia" id="ia">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class='bx bx-camera icon-purple'></i> Escáner Facial Inteligente
+                </div>
+                <span class="clay-badge pink" id="statusBadge">Cámara Activa</span>
+            </div>
+
+            <div class="ai-layout">
+
+                <div class="camera-clay-frame">
+                    <div class="video-container">
+                        <video id="webcam" autoplay playsinline muted></video>
+                        <canvas id="canvas-captura" style="display:none;"></canvas>
+                        <div class="clay-crosshair"></div>
+                    </div>
+                </div>
+
+                <div class="analysis-card">
+                    <h3 class="analysis-title">Análisis de Colorimetría</h3>
+
+                    <button class="clay-btn clay-btn-purple btn-full-mb" onclick="analizarTonoYPiel()">
+                        <i class='bx bx-scan'></i> Analizar Mi Piel
+                    </button>
+
+                    <div id="resultado-color" class="color-detect-row" style="display:none;">
+                        <span class="color-label">Color Detectado:</span>
+                        <div id="muestra-color"></div>
+                    </div>
+
+                    <div id="results" style="display:none;">
+                        <div class="skin-tone-label">
+                            Piel: <span id="skinTone">-</span>
+                        </div>
+
+                        <div class="recs-grid">
+                            <div class="rec-item">
+                                <div class="rec-item-title">Base Recomendada</div>
+                                <div class="rec-item-val" id="foundationRec">-</div>
+                            </div>
+                            <div class="rec-item">
+                                <div class="rec-item-title">Labial Sugerido</div>
+                                <div class="rec-item-val" id="lipstickRec">-</div>
+                            </div>
+                            <div class="rec-item">
+                                <div class="rec-item-title">Rubor Ideal</div>
+                                <div class="rec-item-val" id="blushRec">-</div>
+                            </div>
+                            <div class="rec-item">
+                                <div class="rec-item-title">Sombras</div>
+                                <div class="rec-item-val" id="eyeshadowRec">-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="readout-default" style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted); text-align: center; padding: 10px 0;">
+                        Presiona "Analizar Mi Piel" para obtener recomendaciones a tu medida.
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <div class="cart-order-grid">
+
+            <div class="clay-card card-cart" id="carrito">
+                <div class="section-header">
+                    <div class="section-title"><i class='bx bx-cart icon-pink-dark'></i> Mi Carrito</div>
+                    <span class="clay-badge pink" id="cartCountBadge">0 Productos</span>
+                </div>
+
+                <div class="cart-list-box" id="listaCarrito">
+                    <p class="cart-empty-msg">Tu carrito está vacío.</p>
+                </div>
+
+                <div class="cart-total-row">
+                    <span class="cart-total-label">Total:</span>
+                    <span class="cart-total-amount">$<span id="totalCarrito">00.000</span></span>
+                </div>
+            </div>
+
+            <div class="clay-card" id="pedido">
+                <div class="section-header">
+                    <div class="section-title"><i class='bx bx-send icon-purple'></i> Enviar Pedido</div>
+                    <span class="clay-badge purple">Despacho Exprés</span>
+                </div>
+
+                <form onsubmit="event.preventDefault(); enviarPedido();">
+                    <input type="text" class="clay-input" placeholder="Tu Nombre Completo..." required>
+                    <input type="email" class="clay-input" placeholder="Correo Electrónico..." required>
+                    <input type="tel" class="clay-input" placeholder="Teléfono..." required>
+                    <textarea class="clay-input textarea-order" placeholder="Dirección de envío..."></textarea>
+
+                    <button type="submit" class="clay-btn clay-btn-mint btn-full">
+                        <i class='bx bx-check-circle'></i> Confirmar y Enviar
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+        <section class="clay-card section-nosotros" id="nosotros">
+            <span class="clay-badge mint mb-12">Sobre Nosotros</span>
+            <h2 class="nosotros-title">
+                Belleza Inteligente & Accesible ✨
+            </h2>
+            <p class="nosotros-desc">
+                Makeup Coach combina algoritmos avanzados de visión artificial con productos cosméticos de alta gama para brindarte una experiencia totalmente adaptada a ti.
+            </p>
+        </section>
+
+        <footer>
+            <p>Makeup Coach Studio © 2026 | Claymorphism Experience</p>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
