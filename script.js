@@ -201,14 +201,69 @@ function enviarPedido() {
     actualizarCarritoUI();
 }
 
-async function initCamera() {
+// Variable global para controlar la transmisión de la cámara
+let streamCamara = null;
+
+async function toggleCamara() {
+    if (streamCamara) {
+        apagarCamara();
+    } else {
+        await encenderCamara();
+    }
+}
+
+async function encenderCamara() {
     const video = document.getElementById('webcam');
-    if (!video || !navigator.mediaDevices?.getUserMedia) return;
+    const badge = document.getElementById('statusBadge');
+    const btnCamara = document.getElementById('btnToggleCamara');
+
+    if (!video || !navigator.mediaDevices?.getUserMedia) {
+        mostrarModal('Error', 'Tu navegador no soporta el uso de la cámara.');
+        return;
+    }
+
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        video.srcObject = stream;
+        streamCamara = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = streamCamara;
+
+        // Actualizar UI cuando esté activa
+        if (badge) {
+            badge.innerText = 'Cámara Activa';
+            badge.className = 'clay-badge pink';
+        }
+        if (btnCamara) {
+            btnCamara.innerHTML = "<i class='bx bx-stop-circle'></i> Apagar Cámara";
+            btnCamara.className = 'clay-btn clay-btn-yellow btn-full-mb';
+        }
     } catch (e) {
-        console.log('Cámara no activa o sin permisos.');
+        console.warn('Cámara no activa o sin permisos:', e);
+        mostrarModal('Sin Permisos', 'Por favor otorga permisos para acceder a la cámara.');
+    }
+}
+
+function apagarCamara() {
+    const video = document.getElementById('webcam');
+    const badge = document.getElementById('statusBadge');
+    const btnCamara = document.getElementById('btnToggleCamara');
+
+    if (streamCamara) {
+        // Detener cada pista/track de la transmisión
+        streamCamara.getTracks().forEach(track => track.stop());
+        streamCamara = null;
+    }
+
+    if (video) {
+        video.srcObject = null;
+    }
+
+    // Actualizar UI cuando esté apagada
+    if (badge) {
+        badge.innerText = 'Cámara Apagada';
+        badge.className = 'clay-badge purple';
+    }
+    if (btnCamara) {
+        btnCamara.innerHTML = "<i class='bx bx-webcam'></i> Encender Cámara";
+        btnCamara.className = 'clay-btn clay-btn-mint btn-full-mb';
     }
 }
 
@@ -235,6 +290,10 @@ function obtenerColorMejilla() {
 }
 
 async function analizarTonoYPiel() {
+    if (!streamCamara) {
+        mostrarModal('Cámara Apagada', 'Por favor enciende la cámara antes de realizar el análisis.');
+        return;
+    }
     playSquishSound();
     GEMINI_API_KEY ? await analizarConGemini() : analizarAleatorio();
 }
@@ -304,7 +363,125 @@ document.addEventListener('DOMContentLoaded', async () => {
         el.addEventListener('click', playSquishSound);
     });
 
-    await initCamera();
     await inicializarProductos();
     crearBotonSubir();
+});
+const baseConocimiento = {
+  "Métodos de Pago": {
+    "¿Qué métodos de pago aceptan?": "Aceptamos tarjetas de crédito y débito (Visa, Mastercard, American Express), transferencias bancarias, plataformas digitales (como Nequi o Daviplata, según disponibilidad) y pago contra entrega en ciudades seleccionadas.",
+    "¿Es seguro ingresar los datos de mi tarjeta en la página?": "Totalmente seguro. Nuestra tienda cuenta con certificado de seguridad SSL y pasarelas de pago cifradas de extremo a extremo, lo que garantiza que tus datos financieros no quedan almacenados ni son visibles para terceros.",
+    "¿Puedo pagar cuando reciba el producto en mi casa (pago contra entrega)?": "¡Sí! Contamos con la opción de pago contra entrega para la mayoría de las ciudades principales. Puedes cancelar en efectivo o con transferencia al momento de recibir tu paquete.",
+    "¿Ofrecen opción de pago a cuotas o financiamiento sin tarjeta de crédito?": "Sí, trabajamos con aliados financieros de crédito directo (como Addi o Sistecrédito). Puedes seleccionar esta opción al finalizar tu compra y completar una verificación rápida en minutos."
+  },
+  "Envíos y Tiempos de Entrega": {
+    "¿Cuánto cuesta el envío y a partir de qué monto es gratis?": "El costo del envío estándar varía según tu ubicación (usualmente entre $8.000 y $15.000 COP). Sin embargo, ¡el envío es totalmente GRATIS en compras superiores a $120.000 COP!",
+    "¿Cuánto tiempo tarda en llegar mi pedido a mi ciudad/dirección?": "Los envíos a ciudades principales toman entre 2 y 4 días hábiles. Para zonas trayecto especial o municipios lejanos, el tiempo estimado es de 5 a 7 días hábiles.",
+    "¿Con qué empresa de mensajería envían los paquetes y cómo puedo rastrear mi pedido?": "Trabajamos con transportadoras aliadas como Coordinadora, Servientrega e Inter rapidísimo. Tan pronto despachemos tu paquete, te enviaremos un correo/WhatsApp con el número de guía y el enlace directo de rastreo.",
+    "¿Hacen envíos internacionales o solo a nivel nacional?": "Por el momento realizamos envíos únicamente a nivel nacional. Estamos trabajando para habilitar envíos internacionales muy pronto."
+  },
+  "Productos y Calidad": {
+    "¿Cómo sé cuál es mi tono ideal de base o corrector?": "Para esto está la asesoría de IA para que tengas tu tono perfecto.",
+    "¿Sus productos son 100% originales, libres de crueldad animal (cruelty-free) o veganos?": "Garantizamos un catálogo 100% original con registro sanitario al día. Además, la mayoría de nuestras marcas son certificadas Cruelty-Free y contamos con una línea exclusiva de productos 100% veganos claramente señalizados.",
+    "¿Qué fecha de vencimiento tienen los productos o cómo sé si están frescos?": "Todos nuestros lotes son de alta rotación y tienen fechas de expiración amplias (mínimo 12 a 24 meses). Además, cada empaque incluye la fecha de caducidad y el ícono PAO (tiempo útil una vez abierto).",
+    "¿Tienen muestras gratis o regalos por compras superiores a cierto valor?": "¡Nos encanta consentirte! En todas las compras incluimos una muestra de regalo, y por compras superiores a cierto monto (p. ej. $150.000 COP) añadimos un obsequio especial en tu paquete."
+  },
+  "Cambios, Devoluciones y Atención": {
+    "¿Cuál es la política de cambios o devoluciones si el producto me llega roto o dañado?": "Si tu producto llega en mal estado, cuentas con 48 horas tras recibirlo para notificarnos con fotos/video del empaque. Te enviaremos un reemplazo totalmente gratis sin asumir ningún costo adicional.",
+    "¿Puedo cambiar un producto si me equivoqué de tono al hacer la compra?": "Aceptamos cambios de tono siempre y cuando el producto esté completamente nuevo, sellado en su empaque original y sin usar por motivos de higiene. Los costos de transporte para el cambio corren por cuenta del cliente.",
+    "¿Tienen alguna tienda física o punto de retiro donde pueda ir a recoger mi pedido directamente?": "Somos una tienda 100% digital para ofrecerte los mejores precios, pero si estás en nuestra ciudad sede, puedes seleccionar la opción 'Recoger en bodega' durante el proceso de compra sin costo de envío."
+  }
+};
+
+const saludos = ['hola', 'buenos dias', 'buenas tardes', 'buenas noches', 'saludos', 'que tal', 'hey'];
+const despedidas = ['adios', 'hasta luego', 'nos vemos', 'cha', 'bye', 'salir', 'terminar'];
+
+// Elementos del DOM
+const toggleBtn = document.getElementById('chat-toggle-btn');
+const closeBtn = document.getElementById('close-chat-btn');
+const chatWindow = document.getElementById('chat-window');
+const sendBtn = document.getElementById('send-btn');
+const userInput = document.getElementById('user-input');
+const chatMessages = document.getElementById('chat-messages');
+
+// Abrir / Cerrar Chat
+toggleBtn.addEventListener('click', () => chatWindow.classList.toggle('chat-hidden'));
+closeBtn.addEventListener('click', () => chatWindow.classList.add('chat-hidden'));
+
+// Normalizar texto para búsqueda
+function limpiarTexto(texto) {
+  return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w\s]/gi, '');
+}
+
+// Búsqueda de coincidencia basada en palabras clave
+function obtenerRespuesta(pregunta) {
+  const preguntaLimpia = limpiarTexto(pregunta);
+
+  if (saludos.some(s => preguntaLimpia.includes(s))) {
+    return "¡Hola! 😊 Soy tu asistente de maquillaje. ¿En qué te puedo ayudar hoy?";
+  }
+  if (despedidas.some(d => preguntaLimpia.includes(d))) {
+    return "¡Hasta pronto! 👋 Que tengas un excelente día.";
+  }
+
+  let mejorRespuesta = "";
+  let maxCoincidencias = 0;
+  let categoriaEncontrada = "";
+
+  const palabrasUsuario = preguntaLimpia.split(' ').filter(w => w.length > 2);
+
+  for (const [categoria, preguntas] of Object.entries(baseConocimiento)) {
+    for (const [preguntaBase, respuesta] of Object.entries(preguntas)) {
+      const preguntaBaseLimpia = limpiarTexto(preguntaBase);
+      let coincidencias = 0;
+
+      palabrasUsuario.forEach(palabra => {
+        if (preguntaBaseLimpia.includes(palabra)) {
+          coincidencias++;
+        }
+      });
+
+      if (coincidencias > maxCoincidencias) {
+        maxCoincidencias = coincidencias;
+        mejorRespuesta = respuesta;
+        categoriaEncontrada = categoria;
+      }
+    }
+  }
+
+  if (maxCoincidencias > 0) {
+    return `📚 <b>[${categoriaEncontrada}]</b> ${mejorRespuesta}`;
+  } else {
+    return "🤔 No estoy segura de la respuesta. Intenta preguntarme sobre métodos de pago, envíos, productos o devoluciones.";
+  }
+}
+
+// Agregar Mensajes al DOM
+function agregarMensaje(texto, esUsuario) {
+  const msgDiv = document.createElement('div');
+  msgDiv.classList.add('message');
+  msgDiv.classList.add(esUsuario ? 'user-message' : 'bot-message');
+  msgDiv.innerHTML = texto;
+  chatMessages.appendChild(msgDiv);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Procesar envío de mensaje
+function enviarMensaje() {
+  const texto = userInput.value.trim();
+  if (!texto) return;
+
+  agregarMensaje(texto, true);
+  userInput.value = '';
+
+  // Respuesta simulada con un breve retraso
+  setTimeout(() => {
+    const respuesta = obtenerRespuesta(texto);
+    agregarMensaje(respuesta, false);
+  }, 400);
+}
+
+// Eventos de entrada
+sendBtn.addEventListener('click', enviarMensaje);
+userInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') enviarMensaje();
 });

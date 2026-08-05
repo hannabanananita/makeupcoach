@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
@@ -511,12 +512,12 @@
         </section>
 
         <section class="clay-card section-mb section-ia" id="ia">
-            <div class="section-header">
-                <div class="section-title">
-                    <i class='bx bx-camera icon-purple'></i> Escáner Facial Inteligente
-                </div>
-                <span class="clay-badge pink" id="statusBadge">Cámara Activa</span>
-            </div>
+    <div class="section-header">
+        <div class="section-title">
+            <i class='bx bx-camera icon-purple'></i> Escáner Facial Inteligente
+        </div>
+        <span class="clay-badge purple" id="statusBadge">Cámara Apagada</span>
+    </div>
 
             <div class="ai-layout">
 
@@ -528,13 +529,15 @@
                     </div>
                 </div>
 
-                <div class="analysis-card">
-                    <h3 class="analysis-title">Análisis de Colorimetría</h3>
+               <div class="analysis-card">
+                 <h3 class="analysis-title">Análisis de Colorimetría</h3>
+             <button id="btnToggleCamara" class="clay-btn clay-btn-mint btn-full-mb" onclick="toggleCamara()">
+                 <i class='bx bx-webcam'></i> Encender Cámara
+            </button>
 
-                    <button class="clay-btn clay-btn-purple btn-full-mb" onclick="analizarTonoYPiel()">
-                        <i class='bx bx-scan'></i> Analizar Mi Piel
-                    </button>
-
+            <button class="clay-btn clay-btn-purple btn-full-mb" onclick="analizarTonoYPiel()">
+                <i class='bx bx-scan'></i> Analizar Mi Piel
+         </button>
                     <div id="resultado-color" class="color-detect-row" style="display:none;">
                         <span class="color-label">Color Detectado:</span>
                         <div id="muestra-color"></div>
@@ -626,8 +629,45 @@
         </footer>
 
     </div>
+<div id="chat-widget-container">
+    
+    <!-- Ventana del Chat -->
+    <div id="chat-window" class="chat-hidden">
+      <div class="chat-header">
+        <div class="chat-title">
+          <i data-lucide="help-circle" class="header-icon"></i>
+          <span>Makeup Coach AI</span>
+        </div>
+        <button id="close-chat-btn" aria-label="Cerrar chat">&times;</button>
+      </div>
+
+      <div id="chat-messages" class="chat-messages">
+        <div class="message bot-message">
+          ¡Hola! 🌸. ¿En qué te puedo ayudar hoy?
+        </div>
+      </div>
+
+      <div class="chat-input-area">
+        <input type="text" id="user-input" placeholder="Escribe tu pregunta..." />
+        <button id="send-btn" aria-label="Enviar mensaje">
+          <i data-lucide="send"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Botón Flotante con Signo de Interrogación Rosa -->
+    <button id="chat-toggle-btn" aria-label="Abrir chat de asistencia">
+      <i data-lucide="help-circle" class="question-icon"></i>
+    </button>
+
+  </div>
 
     <script src="script.js"></script>
+    <script>
+    // Inicializar iconos de Lucide
+    lucide.createIcons();
+  </script>
+
 </body>
 
 </html>
